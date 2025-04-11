@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Health Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #symptomChecker {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        #results {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Show specific questions based on primary concern
+            $('#primaryConcern').change(function () {
+                $('.questions').hide();
+                if ($(this).val() === "headache") {
+                    $('#headacheQuestions').show();
+                } else if ($(this).val() === "stomachache") {
+                    $('#stomachacheQuestions').show();
+                } else if ($(this).val() === "backpain") {
+                    $('#backpainQuestions').show();
+                } else if ($(this).val() === "skinrash") {
+                    $('#skinRashQuestions').show();
+                } else if ($(this).val() === "coldflu") {
+                    $('#coldFluQuestions').show();
+                } else if ($(this).val() === "allergies") {
+                    $('#allergiesQuestions').show();
+                }
+                $('#results').empty(); // Clear previous results
+            });
+
+            // Generate recommendations for Headache
+            $('#checkSymptoms').click(function () {
+                var location = $('#headacheLocation').val();
+                var intensity = $('#headacheIntensity').val();
+                var recommendations = [];
+
+                if (!location || !intensity) {
+                    alert("Please provide details about the location and intensity of your headache.");
+                    return;
+                }
+
+                recommendations.push(`<strong>Headache Recommendations:</strong>`);
+
+                // Location-specific recommendations
+                if (location === "frontal") {
+                    recommendations.push("Apply a cold compress to your forehead to reduce inflammation.");
+                    recommendations.push("Avoid bright screens or excessive screen time.");
+                }
+                if (location === "temporal") {
+                    recommendations.push("Massage your temples gently with lavender or peppermint oil.");
+                    recommendations.push("Stay in a quiet, dark room to relax.");
+                }
+                if (location === "occipital") {
+                    recommendations.push("Use a warm compress on the back of your neck to relieve tension.");
+                    recommendations.push("Perform gentle neck stretches to ease muscle tightness.");
+                }
+                if (location === "diffuse") {
+                    recommendations.push("Drink plenty of water to stay hydrated.");
+                    recommendations.push("Practice deep breathing or relaxation techniques to reduce stress.");
+                }
+
+                // Intensity-specific recommendations
+                if (intensity === "mild") {
+                    recommendations.push("Get some rest and try relaxation techniques like yoga or meditation.");
+                    recommendations.push("Avoid loud noises or stressful environments.");
+                }
+                if (intensity === "moderate") {
+                    recommendations.push("Consider taking over-the-counter pain relievers like ibuprofen or acetaminophen.");
+                    recommendations.push("Apply a cold compress and lie down in a quiet space.");
+                }
+                if (intensity === "severe") {
+                    recommendations.push("Consult a doctor immediately if the pain is severe and persistent.");
+                    recommendations.push("Monitor for additional symptoms like nausea, vision issues, or confusion.");
+                }
+
+                // Display recommendations
+                $('#results').html(recommendations.map(r => `<p>${r}</p>`).join(''));
+            });
+
+            // Generate recommendations for Stomach Ache
+            $('#checkStomachAcheSymptoms').click(function () {
+                var location = $('#stomachAcheLocation').val();
+                var symptoms = $('#stomachAcheSymptoms').val();
+                var recommendations = [];
+
+                if (!location || !symptoms) {
+                    alert("Please provide details about the location and symptoms of your stomach ache.");
+                    return;
+                }
+
+                recommendations.push(`<strong>Stomach Ache Recommendations:</strong>`);
+
+                // Location-specific recommendations
+                if (location === "upper") {
+                    recommendations.push("Avoid acidic or spicy foods and consider taking antacids.");
+                    recommendations.push("Drink plenty of water and eat smaller, more frequent meals.");
+                }
+                if (location === "lower") {
+                    recommendations.push("Apply a heating pad to the lower abdomen to relieve cramping.");
+                    recommendations.push("Avoid heavy or greasy foods that may worsen discomfort.");
+                }
+                if (location === "general") {
+                    recommendations.push("Drink peppermint or chamomile tea to soothe the stomach.");
+                    recommendations.push("Rest and monitor your symptoms closely.");
+                }
+
+                // Symptoms-specific recommendations
+                if (symptoms.includes("vomiting")) {
+                    recommendations.push("Stay hydrated with clear fluids and avoid solid foods temporarily.");
+                    recommendations.push("Try sipping electrolyte solutions to prevent dehydration.");
+                }
+                if (symptoms.includes("diarrhea")) {
+                    recommendations.push("Consume bland foods like rice, bananas, or toast (BRAT diet). Avoid dairy products temporarily.");
+                }
+                if (symptoms.includes("bloating")) {
+                    recommendations.push("Avoid carbonated beverages and foods that produce gas, such as beans or cabbage.");
+                    recommendations.push("Consider taking over-the-counter anti-gas medications like simethicone.");
+                }
+
+                // Display recommendations
+                $('#results').html(recommendations.map(r => `<p>${r}</p>`).join(''));
+            });
+
+            // Generate recommendations for Back Pain
+            $('#checkBackPainSymptoms').click(function () {
+                var location = $('#backPainLocation').val();
+                var recommendations = [];
+
+                if (!location) {
+                    alert("Please provide details about the location of your back pain.");
+                    return;
+                }
+
+                recommendations.push(`<strong>Back Pain Recommendations:</strong>`);
+
+                // Location-specific recommendations
+                if (location === "lower") {
+                    recommendations.push("Apply a heating pad to the lower back to reduce tension.");
+                    recommendations.push("Avoid heavy lifting and engage in light stretching exercises.");
+                }
+                if (location === "upper") {
+                    recommendations.push("Use an ergonomic chair to maintain good posture.");
+                    recommendations.push("Perform shoulder and neck stretches to relieve tension.");
+                }
+                if (location === "general") {
+                    recommendations.push("Engage in low-impact activities such as swimming or walking.");
+                    recommendations.push("Consider physical therapy if the pain persists.");
+                }
+
+                // Display recommendations
+                $('#results').html(recommendations.map(r => `<p>${r}</p>`).join(''));
+            });
+
+            // Generate recommendations for Skin Rash
+            $('#checkSkinRashSymptoms').click(function () {
+                var location = $('#skinRashLocation').val();
+                var symptoms = $('#skinRashSymptoms').val();
+                var recommendations = [];
+
+                if (!location || !symptoms) {
+                    alert("Please provide details about the location and symptoms of your skin rash.");
+                    return;
+                }
+
+                recommendations.push(`<strong>Skin Rash Recommendations:</strong>`);
+
+                if (location.includes("face")) {
+                    recommendations.push("Use hypoallergenic products and avoid direct sunlight.");
+                    recommendations.push("Apply aloe vera gel to soothe irritation.");
+                }
+                if (location.includes("arms") || location.includes("legs")) {
+                    recommendations.push("Apply calamine lotion or an anti-itch cream to reduce discomfort.");
+                    recommendations.push("Wear loose, breathable fabrics to prevent irritation.");
+                }
+
+                if (symptoms.includes("itchy")) {
+                    recommendations.push("Take antihistamines to reduce itching.");
+                    recommendations.push("Avoid scratching to prevent infection.");
+                }
+                if (symptoms.includes("red")) {
+                    recommendations.push("Apply cool compresses to soothe redness and inflammation.");
+                }
+                if (symptoms.includes("blisters")) {
+                    recommendations.push("Keep the area clean and dry. Consult a doctor if blisters persist or worsen.");
+                }
+
+                $('#results').html(recommendations.map(r => `<p>${r}</p>`).join(''));
+            });
+
+            // Generate recommendations for Cold/Flu
+            $('#checkColdFluSymptoms').click(function () {
+                var symptoms = $('#coldFluSymptoms').val();
+                var recommendations = [];
+
+                if (!symptoms) {
+                    alert("Please describe your symptoms.");
+                    return;
+                }
+
+                recommendations.push(`<strong>Cold/Flu Recommendations:</strong>`);
+
+                recommendations.push("Stay hydrated by drinking water, herbal tea, or clear broths.");
+                recommendations.push("Get plenty of rest to allow your body to recover.");
+                recommendations.push("Use over-the-counter medications like acetaminophen for fever or body aches.");
+
+                if (symptoms.includes("cough")) {
+                    recommendations.push("Use a humidifier or inhale steam to soothe your throat.");
+                    recommendations.push("Consider honey with warm water or tea for cough relief.");
+                }
+                if (symptoms.includes("congestion")) {
+                    recommendations.push("Use saline nasal sprays to relieve nasal congestion.");
+                    recommendations.push("Apply warm compresses to your sinuses for relief.");
+                }
+                if (symptoms.includes("fever")) {
+                    recommendations.push("Monitor your temperature and consider fever reducers like ibuprofen if needed.");
+                }
+
+                $('#results').html(recommendations.map(r => `<p>${r}</p>`).join(''));
+            });
+
+            // Generate recommendations for Allergies
+            $('#checkAllergySymptoms').click(function () {
+                var symptoms = $('#allergySymptoms').val();
+                var recommendations = [];
+
+                if (!symptoms) {
+                    alert("Please describe your symptoms.");
+                    return;
+                }
+
+                recommendations.push(`<strong>Allergy Recommendations:</strong>`);
+
+                recommendations.push("Avoid allergens that trigger your symptoms, if known.");
+                recommendations.push("Use over-the-counter antihistamines to manage sneezing and watery eyes.");
+                recommendations.push("Consider using air purifiers to reduce allergens in your home.");
+
+                if (symptoms.includes("rash")) {
+                    recommendations.push("Apply hydrocortisone cream to the affected area.");
+                    recommendations.push("Wear loose-fitting clothing to avoid further irritation.");
+                }
+                if (symptoms.includes("sneezing")) {
+                    recommendations.push("Use a saline nasal spray to clear allergens from your nasal passages.");
+                    recommendations.push("Avoid being outdoors during high pollen counts.");
+                }
+                if (symptoms.includes("watery eyes")) {
+                    recommendations.push("Apply a cool compress to your eyes and avoid rubbing them.");
+                }
+
+                $('#results').html(recommendations.map(r => `<p>${r}</p>`).join(''));
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Interactive Health Dashboard</h1>
+
+    <div id="symptomChecker">
+        <h2>Symptom Checker</h2>
+        <p>What is your primary concern?</p>
+        <select id="primaryConcern">
+            <option value="">Select...</option>
+            <option value="headache">Headache</option>
+            <option value="stomachache">Stomach Ache</option>
+            <option value="backpain">Back Pain</option>
+            <option value="skinrash">Skin Rash</option>
+            <option value="coldflu">Cold/Flu</option>
+            <option value="allergies">Allergies</option>
+        </select><br><br>
+
+        <!-- Headache Questions -->
+        <div id="headacheQuestions" class="questions" style="display:none;">
+            <h3>Tell us more about your headache:</h3>
+            <label for="headacheLocation">Location:</label>
+            <select id="headacheLocation">
+                <option value="">Select...</option>
+                <option value="frontal">Frontal (Forehead)</option>
+                <option value="temporal">Temporal (Sides of the Head)</option>
+                <option value="occipital">Occipital (Back of the Head)</option>
+                <option value="diffuse">Diffuse (All Over)</option>
+            </select><br><br>
+            <label for="headacheIntensity">Intensity:</label>
+            <select id="headacheIntensity">
+                <option value="">Select...</option>
+                <option value="mild">Mild</option>
+                <option value="moderate">Moderate</option>
+                <option value="severe">Severe</option>
+            </select><br><br>
+            <button id="checkSymptoms">Check Symptoms</button>
+        </div>
+
+        <!-- Stomach Ache Questions -->
+        <div id="stomachacheQuestions" class="questions" style="display:none;">
+            <h3>Tell us more about your stomach ache:</h3>
+            <label for="stomachAcheLocation">Location:</label>
+            <select id="stomachAcheLocation">
+                <option value="">Select...</option>
+                <option value="upper">Upper Abdomen</option>
+                <option value="lower">Lower Abdomen</option>
+                <option value="general">Generalized</option>
+            </select><br><br>
+            <label for="stomachAcheSymptoms">Symptoms:</label>
+            <textarea id="stomachAcheSymptoms" rows="3" cols="50" placeholder="e.g., nausea, vomiting, bloating, diarrhea"></textarea><br><br>
+            <button id="checkStomachAcheSymptoms">Check Symptoms</button>
+        </div>
+
+        <!-- Back Pain Questions -->
+        <div id="backpainQuestions" class="questions" style="display:none;">
+            <h3>Tell us more about your back pain:</h3>
+            <label for="backPainLocation">Location:</label>
+            <select id="backPainLocation">
+                <option value="">Select...</option>
+                <option value="lower">Lower Back</option>
+                <option value="upper">Upper Back</option>
+                <option value="general">Generalized</option>
+            </select><br><br>
+            <button id="checkBackPainSymptoms">Check Symptoms</button>
+        </div>
+
+        <!-- Skin Rash Questions -->
+        <div id="skinRashQuestions" class="questions" style="display:none;">
+            <h3>Tell us more about your skin rash:</h3>
+            <label for="skinRashLocation">Location:</label>
+            <textarea id="skinRashLocation" rows="2" cols="50" placeholder="e.g., face, arms, legs"></textarea><br><br>
+            <label for="skinRashSymptoms">Symptoms:</label>
+            <textarea id="skinRashSymptoms" rows="3" cols="50" placeholder="e.g., itchy, red, blisters"></textarea><br><br>
+            <button id="checkSkinRashSymptoms">Check Symptoms</button>
+        </div>
+
+        <!-- Cold/Flu Questions -->
+        <div id="coldFluQuestions" class="questions" style="display:none;">
+            <h3>Describe your symptoms:</h3>
+            <textarea id="coldFluSymptoms" rows="4" cols="50" placeholder="e.g., fever, cough, congestion"></textarea><br><br>
+            <button id="checkColdFluSymptoms">Check Symptoms</button>
+        </div>
+
+        <!-- Allergies Questions -->
+        <div id="allergiesQuestions" class="questions" style="display:none;">
+            <h3>Describe your allergy symptoms:</h3>
+            <textarea id="allergySymptoms" rows="3" cols="50" placeholder="e.g., sneezing, watery eyes, rash"></textarea><br><br>
+            <button id="checkAllergySymptoms">Check Symptoms</button>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results"></div>
+</body>
+</html>
